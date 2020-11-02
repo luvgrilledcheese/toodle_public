@@ -1,0 +1,52 @@
+{% extends "template.html" %}
+
+{% block title %}Toodle Edit Task{% endblock %}\
+
+{% block main%}
+<style>
+    @media only screen and (max-width: 500px) {
+        h1 {
+            text-align: center
+        }
+        .tasks {
+            margin: auto;
+            text-align: center;
+        }
+        .inputs {
+            margin: 0 5% 0 5%;
+        }
+    }
+</style>
+<div class="container">
+    <h1 class="title is-1" style="color: #4c4c4c;">Edit Task</h1>
+    {% from "public/_formhelper.html" import render_field %}
+    <form action="" method="POST">
+        {{ form.csrf_token }}
+        <div class="field inputs">
+            <label class="label">Title</label>
+            <div class="control">
+                {{render_field(form.title, class_="input", placeholder="Title")}}
+            </div>
+        </div>
+        <div class="field inputs">
+            <label class="label">Description</label>
+            <div class="control">
+                {{render_field(form.desc, class_="textarea", placeholder="Description")}} 
+            </div>
+        </div>
+        <div class="field inputs">
+            <div class="control">
+                <p>Done {{render_field(form.done, class_="checkbox")}}</p>
+            </div>
+        </div>
+        <div class="inputs">
+            {{render_field(form.idGroup)}}
+        </div>
+        <div class="control inputs">
+            <p><input type="submit" class="button is-primary" value="Edit Task" style="margin-top: 3%"></p>
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}

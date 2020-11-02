@@ -1,0 +1,38 @@
+{% extends "template.html" %}
+
+{% block title %}Toodle Create Group{% endblock %}
+
+{% block main%}
+<style>
+    @media only screen and (max-width: 500px) {
+        h1 {
+            text-align: center
+        }
+        .tasks {
+            margin: auto;
+            text-align: center;
+        }
+        .inputs {
+            margin: 0 5% 0 5%;
+        }
+    }
+</style>
+<div class="container">
+    <h1 class="title is-1" style="color: #4c4c4c;">Create Group</h1>
+    {% from "public/_formhelper.html" import render_field %}
+    <form action="" method="POST">
+        {{ form.csrf_token }}
+        <div class="field inputs">
+            <label class="label">Name</label>
+            <div class="control">
+                {{render_field(form.name, class_="input", placeholder="Name")}}
+            </div>
+        </div>
+        <div class="control inputs">
+            <p><input type="submit" class="button is-primary" value="Create Group"></p>
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}

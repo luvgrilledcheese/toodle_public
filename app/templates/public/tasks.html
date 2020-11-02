@@ -1,0 +1,83 @@
+{% extends "template.html" %}
+
+{% block title %}Toodle Tasks{% endblock %}
+{% block main %}
+<style>
+    @media only screen and (max-width: 500px) {
+        h1 {
+            text-align: center
+        }
+
+        .tasks {
+            margin: auto;
+            text-align: center;
+        }
+
+        .box {
+            margin: 0 5% 0 5%;
+        }
+    }
+</style>
+
+<div class="container">
+    <h1 class="title is-1" style="color: #4c4c4c;">Tasks</h1>
+    {% if session.get("logged_in") != None %}
+    <div class="tasks">
+        <a href="{{ url_for('create') }}" class="button is-primary" style="margin-bottom: 1em;">New Task</a>
+        <a href="{{ url_for('create_group') }}" class="button is-info" style="margin-bottom: 1em;">New Group</a>
+    </div>
+    <br>
+    {% for group in groups %}
+        {% if groups.index(group) % 2 == 0 %}
+        <div style="background-color: #effcf1; padding: 0.41%; margin-bottom: 2%; border-radius: 19px; box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+        {% else %}
+        <div style="background-color: #ebfffc; padding: 0.41%; margin-bottom: 2%; border-radius: 19px; box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+        {% endif %}
+        {% if group.name == "No group" %}
+        <h1 class="title is-6" style="color: #4c4c4c; font-size: 1.10rem; margin-left: 1%">
+            {{group.name}}
+        </h1>
+        {% else %}
+        <h1 class="title is-6" style="color: #4c4c4c; font-size: 1.10rem; margin-left: 1%">
+            <a href="{{url_for('edit_group', id=group.id)}}" style="color: #4c4c4c;">{{group.name}}</a>
+            <a href="{{url_for('create_task', id=group.id)}}">
+                <i class="fas fa-plus fa-xs" style="color:gray;">
+                </i>
+            </a>
+        </h1>
+
+        {% endif %}
+        {% for task in group.tasks %}
+        {% if task.done == False %}
+        <div class="box" style="margin: 1% 1% 1% 1%">
+            <arcticle class="media">
+                <div class="media-content">
+                    <div class="content">
+                        <p>
+                            <strong>{{task.title}}</strong>
+                            <br>
+                        <p>{{task.desc}}</p>
+                        <br>
+                        </p>
+                    </div>
+                </div>
+                <div class="media-right">
+                    <form action="" method="POST">
+                        <a href="{{url_for('done', id=task.id)}}"><i class="fas fa-check" style="color:gray;"></i></a>
+                    </form>
+                    <form action="" method="POST">
+                        <a href="{{url_for('edit', id=task.id)}}"><i class="far fa-edit" style="color:gray;"></i></a>
+                    </form>
+                </div>
+            </arcticle>
+        </div>
+        {% endif %}
+        {% endfor %}
+        <br>
+    </div>
+    {% endfor %}
+    {% endif %}
+    <br>
+</div>
+<script src="https://kit.fontawesome.com/0a9e5428be.js" crossorigin="anonymous"></script>
+{% endblock %}

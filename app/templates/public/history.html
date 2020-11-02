@@ -1,0 +1,73 @@
+{% extends "template.html" %}
+
+{% block title %}Toodle{% endblock %}
+{% block main %}
+<style>
+    @media only screen and (max-width: 500px) {
+        h1 {
+            text-align: center
+        }
+        .tasks {
+            margin: auto;
+            text-align: center;
+        }
+        .box {
+            margin: 0 5% 0 5%;
+        }
+    }
+</style>
+<div class="container">
+    <h1 class="title is-1" style="color: #4c4c4c;">Previous Tasks</h1>
+    {% if session.get("logged_in") != None %}
+    <div class="tasks">
+        <a href="{{ url_for('create_group') }}" class="button is-primary" style="margin-bottom: 1em;">New Group</a>
+    </div>
+    <br>
+        {% for task in tasks %}
+        <div class="box">
+            <arcticle class="media">
+                <div class="media-content">
+                    <div class="content">
+                        <p>
+                            <strong>{{task.title}}</strong>
+                            <br>
+                        <p>{{task.desc}}</p>
+                        <br>
+                        {% for group in groups %}
+                            {% if group.id == task.idGroup%}
+                                {% if group.name == "No group" %}
+                                    <p style="margin-left: 1em; color: gray">
+                                        <small>{{group.name}}</small>
+                                    </p>
+                                {% else %}
+                                    <a href="{{url_for('edit_group', id=group.id)}}">
+                                        <p style="margin-left: 1em; color: gray">
+                                            <small>{{group.name}}</small>
+                                        </p>
+                                    </a>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="media-right">
+                    <form action="" method="POST">
+                        <a href="{{url_for('delete', id=task.id)}}"><i class="fas fa-ban" style="color:gray;"></i></a>
+                    </form>
+                    <form action="" method="POST">
+                        <a href="{{url_for('undone', id=task.id)}}"><i class="fas fa-check" style="color:gray;"></i></a>
+                    </form>
+                    <form action="" method="POST">
+                        <a href="{{url_for('edit', id=task.id)}}"><i class="far fa-edit" style="color:gray;"></i></a>
+                    </form>
+                </div>
+            </arcticle>
+        </div>
+
+        {% endfor %}
+    {% endif %}
+</div>
+<script src="https://kit.fontawesome.com/0a9e5428be.js" crossorigin="anonymous"></script>
+{% endblock %}

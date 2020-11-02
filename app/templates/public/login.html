@@ -1,0 +1,52 @@
+{% extends "template.html" %}
+
+{% block title %}Toodle Login{% endblock %}\
+
+{% block main%}
+<style>
+    @media only screen and (max-width: 500px) {
+        h1 {
+            text-align: center
+        }
+        .tasks {
+            margin: auto;
+            text-align: center;
+        }
+        .inputs {
+            margin: 0 5% 0 5%;
+        }
+    }
+</style>
+<div class="container">
+    <div class="is-vcentered">
+        {% if form.errors %}
+        {{ form.errors }}
+        {% endif %}
+        <h1 class="title is-1" style="color: #4c4c4c;">Login</h1>
+        {% from "public/_formhelper.html" import render_field %}
+        <form action="" method="POST">
+            {{ form.csrf_token }}
+            <div class="field inputs">
+                <label class="label">Username</label>
+                <div class="control">
+                    {{render_field(form.username, class_="input", placeholder="Your username")}}
+                </div>
+            </div>
+            <div class="field inputs">
+                <label class="label">Password</label>
+                <div class="control">
+                    {{render_field(form.password, class_="input", placeholder="Your password")}}
+                </div>
+            </div>
+            <div class="field inputs">
+                <p>Remember me {{render_field(form.remember_me, class_="checkbox")}}</p>
+            </div>
+            <div class="control inputs">
+                <p><input type="submit" class="button is-primary" value="Login"></p>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}
