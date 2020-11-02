@@ -1,5 +1,5 @@
 # toodle
-## A simple task manager (todo list) made with Flask and SQLAlchemy
+#### A simple task manager (todo list) made with Flask and SQLAlchemy
 
 ### How to use locally
 ```
