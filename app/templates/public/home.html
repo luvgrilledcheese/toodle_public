@@ -3,28 +3,11 @@
 {% block title %}Toodle{% endblock %}
 
 {% block main %}
-<style>
-    @media only screen and (max-width: 950px) {
-        img {
-            display: none;
-        }
-        .card_container {
-            flex-direction: column;
-        }
 
-        .card {
-            margin:0 0 10% 0;
-        }
-
-        #button {
-            margin: 0 0 5% 0;
-        }
-    }
-</style>
 <br>
 <div class="container">
     <h1 class="title is-1"
-        style="color: #4c4c4c; font-size: 4rem; text-align: center; margin-top: 10%; margin-bottom: 0px;">Toodle</h1>
+        style="font-size: 4rem; text-align: center; margin-top: 10%; margin-bottom: 0px;">Toodle</h1>
     <p class="is-size-3" style="color: #4c4c4c; text-align: center;">A simple task manager</p>
     <div style="text-align: center; margin-top: 5%;">
         {% if session.get("logged_in") == None %}
@@ -43,7 +26,7 @@
     <br>
     <div style="margin: 5% 10% 5% 10%;">
         <picture>
-            <img src="{{url_for('static', filename='example_toodle.png')}}" style="border-radius: 19px; box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" />
+            <img src="{{url_for('static', filename='images/example_toodle.png')}}" style="border-radius: 19px; box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" />
         </picture>
     </div>
     
@@ -71,10 +54,14 @@
                 </div>
             </div>
         </div>
-        <p style="text-align: center;">Copyright © 2020 Richi Tan</p>
+        <div style="text-align: center;">
+            <a href="https://github.com/luvgrilledcheese/toodle_public" style="color: #4c4c4c;"><i class="fab fa-github fa-3x"></i></a>
+            <p style="margin-top: 1%;">Copyright © 2020 Richi Tan </p>
+        </div>
     </div>
 </div>
-    <div style="background-color: #effcf1;">
+<div style="background-color: #effcf1;">
+        
         <br>
 </div>
 {% endblock %}

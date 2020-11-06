@@ -28,6 +28,7 @@ class TaskForm(FlaskForm):
 class GroupForm(FlaskForm):
     name = StringField('Name', [validators.DataRequired(),validators.Length(max=100)])
     # color = StringField('Color')
+
 @app.route("/")
 def home():
     return render_template("public/home.html")
@@ -38,13 +39,31 @@ def tasks():
         if session["logged_in"] is not None:
             user = User.query.filter_by(username=session["logged_in"]).first()
             idUser = user.id
-            tasks = Task.query.filter_by(idUser=idUser, done=False).all()
             groups = Group.query.filter_by(idUser=idUser).all()
             group_list = []
             for group in groups:
                 if any(t.done == False for t in group.tasks):
                     group_list.append(group)
-        return render_template("public/tasks.html", tasks=tasks, groups=group_list)
+        return render_template("public/tasks.html",groups=group_list, filtered=False)
+    else:
+        flash('You need to be logged in', 'danger')
+        return redirect(url_for('login'))
+    return render_template("public/tasks.html")
+
+@app.route("/tasks/<string:id>")
+def filtered_tasks(id):
+    
+    if "logged_in" in session:
+        if session["logged_in"] is not None:
+            user = User.query.filter_by(username=session["logged_in"]).first()
+            idUser = user.id
+            groups = Group.query.filter_by(idUser=idUser).all()
+            group = Group.query.filter_by(idUser=idUser, id=id).first()
+            group_list = []
+            for g in groups:
+                if any(t.done == False for t in g.tasks):
+                    group_list.append(g)
+        return render_template("public/tasks.html",groups=group_list, filter_group=group, filtered=True)
     else:
         flash('You need to be logged in', 'danger')
         return redirect(url_for('login'))
@@ -253,7 +272,7 @@ def login():
     print(form.password.data)
     if form.validate_on_submit():
         print("user validated")
-        username = form.username.data
+        username = form.username.data.lower()
         password = form.password.data
         user = User.query.filter_by(username=username).first()
         if user is not None:
@@ -263,7 +282,6 @@ def login():
                 session["logged_in"] = username
                 if form.remember_me.data == True:
                     session["USERNAME"] = username
-
                 return redirect(url_for('tasks'))
             else:
                 flash('Login Unsuccessful. Please check username and password', 'danger')
@@ -276,18 +294,6 @@ def login():
 @app.route("/logout")
 def logout():
     session.pop("logged_in", None)
-    # session.pop("USERNAME", None)
+    session.pop("USERNAME", None)
     flash("Logout succesful!", 'primary')
     return redirect(url_for("login"))
-
-# @app.route("/test")
-# def test():
-#     print(session["USERNAME"])
-#     print(session)
-#     print(session["logged_in"])
-#     task = Task.query.all()
-#     print(task)
-#     session.pop("logged_in", None)
-#     session.pop("USERNAME", None)
-#     session.clear()
-#     return "test"

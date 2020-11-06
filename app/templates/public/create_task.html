@@ -39,8 +39,10 @@
                 <p>Done {{render_field(form.done, class_="checkbox")}}</p>
             </div>
         </div>
-        <div class="inputs">
-            {{render_field(form.idGroup)}}
+        <div class="field inputs">
+            <div class="control">
+                {{render_field(form.idGroup, class_="select")}}
+            </div>
         </div>
         <div class="control inputs" style="margin-top: 3%">
             <p><input type="submit" class="button is-primary" value="Create Task"></p>
